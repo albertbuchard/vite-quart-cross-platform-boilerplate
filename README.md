@@ -12,21 +12,20 @@ Before you start, ensure you have Docker and Docker Compose installed on your sy
 
 ## Repository Structure
 
-The project is structured as follows:
+The boilerplate is structured as follows:
 
 ```
-├── interface.js             # Script to interface with the application
 ├── README.md                # This README file
-├── .env.template            # Environment variable template file
+├── .env.template            # Environment variable template file, to be copied to .env
 ├── .gitignore               # Git ignore file
 ├── docker-compose.yml       # Docker Compose configuration file
-├── frontend/                # Frontend application directory
+├── frontend/                # Frontend Vite-React application directory, can be updated to new version
 │   ├── index.html           # Main HTML file
 │   ├── Dockerfile           # Dockerfile for the frontend
 │   ├── .eslintrc.cjs        # ESLint configuration
 │   ├── vite.config.js       # Vite configuration
 │   ├── .gitignore           # Git ignore file for the frontend
-│   ├── package.json         # Frontend package configuration
+│   ├── package.json        # Frontend package configuration
 │   ├── public/              # Public assets directory
 │   │   └── vite.svg         # Vite logo
 │   ├── src/                 # Source code for the frontend
@@ -43,6 +42,8 @@ The project is structured as follows:
 └── packager/                # Packager script directory
     ├── packager.js          # Script to package the application
     └── package.json         # Packager package configuration
+    └── interface.js            # Script for package to launch browser
+    
 ```
 
 ## Setting Up Environment
