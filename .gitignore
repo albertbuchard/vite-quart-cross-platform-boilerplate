@@ -1,0 +1,8 @@
+.venv
+.idea
+*.iml
+*.ipr
+
+.env
+
+frontend/node_modules
