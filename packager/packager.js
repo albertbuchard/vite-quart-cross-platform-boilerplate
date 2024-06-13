@@ -102,7 +102,10 @@ const executeCommand = (command, args, workingDirectory) => {
 const spawnInterfaceScript = () => {
 
     // Determine the path to interface.js relative to the current executable
-    const interfaceScriptPath = findFileInTree(path.dirname(process.execPath), 'interface.js');
+    const interfaceScriptPath = findFileInTree(
+        path.join(path.dirname(process.execPath), "/packager/"),
+        'interface.js'
+    );
 
     console.log(`Spawning interface.js from: ${interfaceScriptPath}`); // Debug: Print the path to interface.js
     const child = spawn('node', [interfaceScriptPath], {
