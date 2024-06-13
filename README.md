@@ -49,12 +49,12 @@ The project is structured as follows:
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
-   cd <repository-directory>
+   git clone git@github.com:albertbuchard/vite-quart-cross-platform-boilerplate.git
+   cd vite-quart-cross-platform-boilerplate
    ```
 
 2. **Create the `.env` file**:
-   Copy the `.env.template` file to `.env` and adjust the variables as needed.
+   Copy the `.env.template` file to `.env` and adjust the variables if needed.
    ```bash
    cp .env.template .env
    ```
