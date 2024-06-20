@@ -16,37 +16,36 @@ Before you start, ensure you have Docker, Docker Compose, and Node.js installed 
 The boilerplate is structured as follows:
 
 ```
-├── README.md                # This README file
-├── .env.template            # Environment variable template file, to be copied to .env
-├── .gitignore               # Git ignore file
-├── docker-compose.yml       # Docker Compose configuration file with hot reload for development
-├── docker-compose-packaged.yml       # Docker Compose configuration file for packaged application
-├── frontend/                # Frontend Vite-React application directory
-│   ├── index.html           # Main HTML file
-│   ├── Dockerfile           # Dockerfile for the frontend
-│   ├── .eslintrc.cjs        # ESLint configuration
-│   ├── vite.config.js       # Vite configuration
-│   ├── .gitignore           # Git ignore file for the frontend
-│   ├── package.json         # Frontend package configuration
-│   ├── public/              # Public assets directory
-│   │   └── vite.svg         # Vite logo
-│   ├── src/                 # Source code for the frontend
-│       ├── App.css          # CSS for the App component
-│       ├── index.css        # Global CSS
-│       ├── main.jsx         # Main entry point for React
-│       ├── App.jsx          # React App component
-│       └── assets/          # Assets directory
-│           └── react.svg    # React logo
-├── backend/                 # Backend application directory
-│   ├── requirements.txt     # Python dependencies
-│   ├── Dockerfile           # Dockerfile for the backend
-│   └── app.py               # Quart application
-└── electron/                # Electron application directory
-    ├── main.js              # Main script for Electron
-    ├── package.json         # Electron package configuration 
-    └── src/                 # Source code for Electron
-        └── utilities.js     # Utility functions for Electron
-        
+├── README.md                          # This README file
+├── .env.template                      # Environment variable template file, to be copied to .env
+├── .gitignore                         # Git ignore file
+├── docker-compose.yml                 # Docker Compose configuration file with hot reload for development
+├── docker-compose-packaged.yml        # Docker Compose configuration file for packaged application
+├── frontend/                          # Frontend Vite-React application directory
+│   ├── index.html                     # Main HTML file
+│   ├── Dockerfile                     # Dockerfile for the frontend
+│   ├── .eslintrc.cjs                  # ESLint configuration
+│   ├── vite.config.js                 # Vite configuration
+│   ├── .gitignore                     # Git ignore file for the frontend
+│   ├── package.json                   # Frontend package configuration
+│   ├── public/                        # Public assets directory
+│   │   └── vite.svg                   # Vite logo
+│   ├── src/                           # Source code for the frontend
+│   │   ├── App.css                    # CSS for the App component
+│   │   ├── index.css                  # Global CSS
+│   │   ├── main.jsx                   # Main entry point for React
+│   │   ├── App.jsx                    # React App component
+│   │   └── assets/                    # Assets directory
+│   │       └── react.svg              # React logo
+├── backend/                           # Backend application directory
+│   ├── requirements.txt               # Python dependencies
+│   ├── Dockerfile                     # Dockerfile for the backend
+│   └── app.py                         # Quart application
+└── electron/                          # Electron application directory
+    ├── main.js                        # Main script for Electron
+    ├── package.json                   # Electron package configuration
+    └── src/                           # Source code for Electron
+        └── utilities.js               # Utility functions for Electron
 ```
 
 ## Setting Up Environment
