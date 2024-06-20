@@ -1,0 +1,20 @@
+{
+  "name": "electron-docker-app",
+  "version": "1.0.0",
+  "main": "main.js",
+  "description": "A cross-platform Electron application that manages Docker services and opens a browser.",
+  "author": "Your Name",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^7.4.0",
+    "electron": "^31.0.2"
+  }
+}
