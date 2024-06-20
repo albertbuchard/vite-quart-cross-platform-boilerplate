@@ -1,37 +1,49 @@
 const {app, BrowserWindow} = require('electron');
 const path = require('path');
 const {
-    loadEnvironmentVariables, findDockerComposeDirectory, executeCommand, loadURLWithRetries, dockerComposeUp,
-    dockerComposeDown
+    loadEnvironmentVariables, findDockerComposePath, executeCommand, loadURLWithRetries, dockerComposeUp,
+    dockerComposeDown, errors
 } = require("./src/utilities");
 
 const startup = async () => {
     try {
-        const composeFileDirectory = findDockerComposeDirectory();
+        console.log('Starting application...');
+        console.log(`Ressource path: ${process.resourcesPath}`);
+        const composeFilePath = findDockerComposePath();
+        console.log(`Docker Compose file path: ${composeFilePath}`);
+        const composeFileDirectory = path.dirname(composeFilePath);
         console.log(`Docker Compose directory: ${composeFileDirectory}`);
 
         loadEnvironmentVariables(composeFileDirectory);
         console.log(`
-        Environment variables loaded. 
-        Host: ${process.env.FRONTEND_HOST}, 
+        Environment variables:
+        Host: ${process.env.FRONTEND_HOST},
         Port: ${process.env.FRONTEND_PORT}
         `);
 
-        await dockerComposeUp({composeFileDirectory});
+        await dockerComposeUp({composeFilePath});
+
+        // Open a window that shows the list of errors
+        if (errors.length === 0) {
+            console.log('No errors found.');
+        } else {
+            const errorWindow = new BrowserWindow({width: 800, height: 600});
+            await errorWindow.loadURL(`data:text/html,${errors.join('<br>')}`);
+        }
 
         // Quit when all windows are closed (except on macOS)
         app.on('window-all-closed', async () => {
             if (process.platform !== 'darwin') {
-                await dockerComposeDown({composeFileDirectory});
+                await dockerComposeDown({composeFilePath});
             }
         });
 
         // Create the Electron window
-        const onCloseCallback = () => dockerComposeDown({composeFileDirectory})
+        const onCloseCallback = () => dockerComposeDown({composeFilePath})
         createWindow({onCloseCallback});
     } catch (error) {
         console.error(`Execution failed: ${error.message}`); // Debug: Print execution failure details
-        app.quit();
+        // app.quit();
     }
 }
 

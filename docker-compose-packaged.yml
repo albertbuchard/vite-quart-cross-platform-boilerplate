@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend  # ! Important: Defines the context for the dockerfile pwd
+      dockerfile: ./Dockerfile
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"  # Use environment variable
+    environment:
+        - BACKEND_PORT=${BACKEND_PORT}  # Pass the backend
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"  # Use environment variable
+    environment:
+      - BACKEND_PORT=${BACKEND_PORT}  # Pass the backend port to the frontend service
+      - BACKEND_HOST=backend  # Use the service name
+      - FRONTEND_PORT=${FRONTEND_PORT}  # Pass the frontend port to the frontend service

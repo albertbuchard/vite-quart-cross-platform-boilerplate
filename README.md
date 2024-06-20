@@ -42,8 +42,10 @@ The boilerplate is structured as follows:
 │   └── app.py               # Quart application
 └── electron/                # Electron application directory
     ├── main.js              # Main script for Electron
-    ├── package.json         # Electron package configuration
-    └── preload.js           # Optional: Preload script for Electron
+    ├── package.json         # Electron package configuration 
+    └── src/                 # Source code for Electron
+        └── utilities.js     # Utility functions for Electron
+        
 ```
 
 ## Setting Up Environment
@@ -55,7 +57,8 @@ The boilerplate is structured as follows:
    ```
 
 2. **Create the `.env` file**:
-   Copy the `.env.template` file to `.env` and adjust the variables if needed.
+
+   Copy the `.env.template` file to `.env` and adjust the PORT variables if needed.
    ```bash
    cp .env.template .env
    ```
@@ -65,22 +68,23 @@ The boilerplate is structured as follows:
 
 ## Running the Application
 
-1. **Build and start the services**:
-   Navigate to the root directory and use Docker Compose to build and start the services.
+1. **Build for local development**:
+   
+   Navigate to the root directory and use Docker Compose to build and start the services defined in the `docker-compose.yml` file. This will start the frontend and backend services for local development.
    ```bash
    docker-compose up --build
    ```
 
 2. **Run the Electron application**:
-   Navigate to the `electron` directory and start the Electron application. This will launch a window that opens the frontend and controls the backend services.
+   - Navigate to the `electron` directory and start the Electron application. 
+   - This will launch a window that opens the frontend and controls the backend services
+   -  If you use `npm start` or `npm run package` to package the application the hot reload will still work
+   -  Use `npm run make` to package the application for prod without hot reload.
    ```bash
    cd electron
    npm install
    npm start
-   ```
-
-3. **Access the frontend and backend**:
-   The Electron application will open a browser window to the frontend URL defined in your `.env` file (`FRONTEND_HOST` and `FRONTEND_PORT`).
+   ``` 
 
 ## Packaging the Application
 
@@ -97,12 +101,18 @@ To package the application into a standalone executable for different platforms,
    ```
 
 3. **Run the packaging script**:
-   This will create executables for Linux, macOS, and Windows in the `dist` directory.
-   ```bash
-   npm run package
-   ```
 
-The executables will be found in the `dist` directory inside the `electron` folder.
+   * This will create executables for Linux, macOS, and Windows in the `dist` or `out` directory depending on the packaging script used. 
+   * The packaging options should be defined in the `electron/forge.config.js` file (see [Electron Forge Configuration](https://www.electronforge.io/configuration) for more details).
+         
+   ```bash
+   npm run package # in /out
+   # OR
+   npm run make # in /out
+   ```
+   
+4. **Access the packaged application**:
+   After a make on macOS with the `@electron-forge/maker-dmg` maker set in the `forge.config.js` file, the `.dmg` file will be created in the `out/make` directory. You can then install the application by dragging it to the Applications folder.
 
 ## Development Notes
 
@@ -128,8 +138,4 @@ For any inquiries or issues, please contact the repository maintainer.
 
 ---
 
-Enjoy building with Vite, Quart, and Electron!
-
----
-
-This README now reflects the updated approach using Electron to manage and package your application across multiple platforms.
+Enjoy building with Vite, Quart, and Electron! 🚀

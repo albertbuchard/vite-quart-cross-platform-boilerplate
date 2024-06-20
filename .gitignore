@@ -2,9 +2,12 @@
 .idea
 *.iml
 *.ipr
-
+*/.idea
+*/.vscode
 .env
 
-frontend/node_modules
+*/node_modules
 
 .txt
+/electron/out/
+*/dist

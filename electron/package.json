@@ -1,20 +1,27 @@
 {
-  "name": "electron-docker-app",
+  "name": "vite-quart-electron",
   "version": "1.0.0",
   "main": "main.js",
-  "description": "A cross-platform Electron application that manages Docker services and opens a browser.",
+  "description": "A cross-platform Electron application that manages a Vite+Quart Docker-Compose services and uses a web-view app approach.",
   "author": "Your Name",
   "license": "MIT",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "multiplatform": "npx electron-builder -mwl"
   },
   "dependencies": {
     "dotenv": "^16.4.5"
   },
   "devDependencies": {
-    "@electron-forge/cli": "^7.4.0",
+    "@electron-forge/cli": "^6.4.2",
+    "@electron-forge/maker-deb": "^6.4.2",
+    "@electron-forge/maker-dmg": "^6.4.2",
+    "@electron-forge/maker-rpm": "^6.4.2",
+    "@electron-forge/maker-squirrel": "^6.4.2",
+    "@electron-forge/maker-zip": "^6.4.2",
+    "electron-builder": "^24.13.3",
     "electron": "^31.0.2"
   }
 }
