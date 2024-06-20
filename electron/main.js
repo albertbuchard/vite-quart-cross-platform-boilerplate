@@ -1,6 +1,9 @@
 const {app, BrowserWindow} = require('electron');
 const path = require('path');
-const {loadEnvironmentVariables, findDockerComposeDirectory, executeCommand} = require("./src/utilities");
+const {
+    loadEnvironmentVariables, findDockerComposeDirectory, executeCommand, loadURLWithRetries, dockerComposeUp,
+    dockerComposeDown
+} = require("./src/utilities");
 
 const startup = async () => {
     try {
@@ -8,49 +11,30 @@ const startup = async () => {
         console.log(`Docker Compose directory: ${composeFileDirectory}`);
 
         loadEnvironmentVariables(composeFileDirectory);
-        console.log(`Environment variables loaded. 
-        Host: ${process.env.FRONTEND_HOST}, Port: ${process.env.FRONTEND_PORT}`);
+        console.log(`
+        Environment variables loaded. 
+        Host: ${process.env.FRONTEND_HOST}, 
+        Port: ${process.env.FRONTEND_PORT}
+        `);
+
+        await dockerComposeUp({composeFileDirectory});
 
         // Quit when all windows are closed (except on macOS)
-        app.on('window-all-closed', () => {
+        app.on('window-all-closed', async () => {
             if (process.platform !== 'darwin') {
-                executeCommand('docker-compose', ['down'], composeFileDirectory).then(() => {
-                    app.quit();
-                }).catch((error) => {
-                    console.error(`Failed to stop Docker Compose: ${error.message}`);
-                    app.quit();
-                });
+                await dockerComposeDown({composeFileDirectory});
             }
         });
 
-        console.log('Starting Docker Compose with rebuild...');
-        await executeCommand(
-            'docker-compose',
-            ['up', '--build'],
-            composeFileDirectory, ({
-                                       newString,
-                                       allOutputString,
-                                       resolve
-                                   }) => {
-                // Look for specific markers in the Docker Compose output that indicate readiness
-                if (allOutputString.includes('Attaching to') || allOutputString.includes('Running on')) {
-                    resolve(); // Resolve the promise when these markers are found
-                }
-            })
-        console.log('Docker Compose started successfully.');
-
         // Create the Electron window
-        const onCloseCallback = async () => {
-            console.log('Stopping Docker Compose...');
-            await executeCommand('docker-compose', ['down'], composeFileDirectory);
-            console.log('Docker Compose stopped successfully.');
-        }
+        const onCloseCallback = () => dockerComposeDown({composeFileDirectory})
         createWindow({onCloseCallback});
     } catch (error) {
         console.error(`Execution failed: ${error.message}`); // Debug: Print execution failure details
-        process.exit(1);
+        app.quit();
     }
 }
+
 
 // Function to create the Electron window
 function createWindow({onCloseCallback}) {
@@ -63,33 +47,14 @@ function createWindow({onCloseCallback}) {
 
     // Construct the URL based on environment variables or defaults
     const url = `http://${process.env.FRONTEND_HOST || 'localhost'}:${process.env.FRONTEND_PORT || 3000}`;
-    // Number of retry attempts
-    const maxRetries = 5;
-    // Delay between retries in milliseconds
-    const retryDelay = 2000;
-    const loadURLWithRetries = (retryCount = 0) => {
-        win.loadURL(url).then(() => {
-            console.log(`Successfully loaded URL: ${url}`);
-        }).catch((error) => {
-            console.error(`Failed to load the URL on attempt ${retryCount + 1}: ${error.message}`);
 
-            if (retryCount < maxRetries) {
-                console.log(`Retrying in ${retryDelay / 1000} seconds...`);
-                setTimeout(() => loadURLWithRetries(retryCount + 1), retryDelay);
-            } else {
-                console.error(`Exceeded maximum retry attempts. Quitting application.`);
-                app.quit();
-            }
-        });
-    };
-
-    loadURLWithRetries();
+    loadURLWithRetries({window: win, url});
 
     // Open the DevTools (optional)
     // win.webContents.openDevTools();
 
     // Event when the window is closed
-    win.on('closed', async() => {
+    win.on('closed', async () => {
         try {
             await onCloseCallback();
             app.quit();
