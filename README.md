@@ -19,7 +19,8 @@ The boilerplate is structured as follows:
 ├── README.md                # This README file
 ├── .env.template            # Environment variable template file, to be copied to .env
 ├── .gitignore               # Git ignore file
-├── docker-compose.yml       # Docker Compose configuration file
+├── docker-compose.yml       # Docker Compose configuration file with hot reload for development
+├── docker-compose-packaged.yml       # Docker Compose configuration file for packaged application
 ├── frontend/                # Frontend Vite-React application directory
 │   ├── index.html           # Main HTML file
 │   ├── Dockerfile           # Dockerfile for the frontend
