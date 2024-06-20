@@ -19,7 +19,7 @@ services:
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"  # Use environment variable
     volumes:
-      - ./frontend:/app # Allows hot-reloading
+      - ./frontend/src:/app/src # Allows hot-reloading
     environment:
       - BACKEND_PORT=${BACKEND_PORT}  # Pass the backend port to the frontend service
       - BACKEND_HOST=backend  # Use the service name

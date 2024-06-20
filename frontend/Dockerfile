@@ -7,12 +7,11 @@ WORKDIR /app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
-
 # Copy the rest of the application code
 COPY . .
 
+# Install dependencies
+RUN npm install
 
 # Expose the port defined in the environment variable
 EXPOSE ${FRONTEND_PORT}
