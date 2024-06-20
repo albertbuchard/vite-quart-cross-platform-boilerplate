@@ -44,6 +44,7 @@ The boilerplate is structured as follows:
 └── electron/                          # Electron application directory
     ├── main.js                        # Main script for Electron
     ├── package.json                   # Electron package configuration
+    ├── forge.config.js                # Electron Forge configuration for packaging
     └── src/                           # Source code for Electron
         └── utilities.js               # Utility functions for Electron
 ```
